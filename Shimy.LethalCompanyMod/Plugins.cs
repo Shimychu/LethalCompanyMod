@@ -19,11 +19,13 @@ namespace Shimy.LethalCompanyMod
 
         private readonly Harmony harmony = new Harmony(modGUID);
 
-        private static ShimyModBase Instance;
+        internal static ShimyModBase Instance;
 
-        internal ManualLogSource mls;
+        internal static ManualLogSource mls;
 
         internal ConfigController ConfigManager;
+
+        internal ModMenu Menu;
 
         void Awake()
         {
@@ -37,6 +39,8 @@ namespace Shimy.LethalCompanyMod
 
             harmony.PatchAll(typeof(ShimyModBase));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
+            harmony.PatchAll(typeof(TerminalPatch));
+            //harmony.PatchAll(typeof(QuickMenuManagerPatch));
 
             /*
              * Configuration for the server settings including
@@ -52,6 +56,17 @@ namespace Shimy.LethalCompanyMod
              */
             ConfigManager = new ConfigController(Config);
             ConfigManager.ServerName = "Shimy Config Manager.";
+
+            /*
+             * Create mod menu
+             */
+
+            var menuGameObject = new UnityEngine.GameObject("ModMenu");
+            UnityEngine.Object.DontDestroyOnLoad(menuGameObject);
+            menuGameObject.hideFlags = UnityEngine.HideFlags.HideAndDontSave;
+            menuGameObject.AddComponent<ModMenu>();
+            Menu = (ModMenu)menuGameObject.GetComponent("ModMenu");
+            ShimyModBase.mls.LogInfo("Mod menu Created.");
 
         }
     }
