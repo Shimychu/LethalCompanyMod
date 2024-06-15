@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using GameNetcodeStuff;
 using HarmonyLib;
 using Shimy.LethalCompanyMod.Patches;
 using System;
@@ -25,6 +26,8 @@ namespace Shimy.LethalCompanyMod
 
         internal ConfigController ConfigManager;
 
+        internal PlayerControllerB Player;
+
         internal ModMenu Menu;
 
         void Awake()
@@ -38,8 +41,14 @@ namespace Shimy.LethalCompanyMod
             mls.LogInfo("Shimy Sprint Mod.");
 
             harmony.PatchAll(typeof(ShimyModBase));
-            harmony.PatchAll(typeof(PlayerControllerBPatch));
             harmony.PatchAll(typeof(TerminalPatch));
+            harmony.PatchAll(typeof(PlayerControllerBPatch));
+
+            /*
+             * Set the instance of player controller so that we have access to playercontroler.
+             */
+
+            this.Player = GameNetworkManager.Instance.localPlayerController;
             //harmony.PatchAll(typeof(QuickMenuManagerPatch));
 
             /*
@@ -68,6 +77,11 @@ namespace Shimy.LethalCompanyMod
             Menu = (ModMenu)menuGameObject.GetComponent("ModMenu");
             ShimyModBase.mls.LogInfo("Mod menu Created.");
 
+        }
+
+        public void patchPlayerController()
+        {
+            harmony.PatchAll(typeof(PlayerControllerBPatch));
         }
     }
 }
