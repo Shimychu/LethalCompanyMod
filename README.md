@@ -1,16 +1,20 @@
-06-14
-Moved cheats to terminal command\n
+06-14<br />
+=
+Moved cheats to terminal command<br />
 
-Player Cheats
-===
-"poweroverwhelming" - infinite hp regen\n
-"foodforthought" - infinite sprint\n
-"muscleman" - weightless\n
-"allforone" enable all cheats\n
+Player Cheats<br />
+--
+"poweroverwhelming" - infinite hp regen<br />
+"foodforthought" - infinite sprint<br />
+"muscleman" - weightless<br />
+"allforone" enable all cheats<br />
+<br />
 
-Round Cheats\n
-===
-"showmethemoney" - 25000 credits+\n
+Round Cheats<br />
+--
+"showmethemoney" - 25000 credits+<br />
+<br />
 
-06-11\n
-Infinite Sprint \n
+06-11<br />
+=
+Infinite Sprint <br />
