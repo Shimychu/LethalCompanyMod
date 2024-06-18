@@ -43,6 +43,7 @@ namespace Shimy.LethalCompanyMod
             harmony.PatchAll(typeof(ShimyModBase));
             harmony.PatchAll(typeof(TerminalPatch));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
+            harmony.PatchAll(typeof(SpringManAIPatch));
 
             /*
              * Set the instance of player controller so that we have access to playercontroler.

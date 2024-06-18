@@ -52,25 +52,30 @@ namespace Shimy.LethalCompanyMod.Patches
             {
                 ShimyModBase.mls.LogInfo("Infinite Hp toggle");
                 PlayerControllerBPatch.infiniteHPToggle(true);
+                lastTextInput = "";
             }
             if (lastTextInput == "foodforthought")
             {
                 ShimyModBase.mls.LogInfo("Infinite Sprint toggle");
                 PlayerControllerBPatch.infiniteSprintToggle(true);
+                lastTextInput = "";
             }
             if (lastTextInput == "showmethemoney")
             {
                 ___groupCredits = ___groupCredits + 25000;
+                lastTextInput = "";
             }
             if (lastTextInput == "muscleman")
             {
                 ShimyModBase.mls.LogInfo("Infinite Weight toggle");
                 PlayerControllerBPatch.infiniteMuscleToggle(true);
+                lastTextInput = "";
             }
             if (lastTextInput == "allforone")
             {
                 ShimyModBase.mls.LogInfo("All for one toggle");
                 PlayerControllerBPatch.allForOneToggle(true);
+                lastTextInput = "";
             }
         }
 
