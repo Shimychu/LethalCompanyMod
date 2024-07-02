@@ -8,14 +8,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using System.IO;
+using System.Reflection;
+using LethalLib.Modules;
 
 namespace Shimy.LethalCompanyMod
 {
     [BepInPlugin(modGUID, modName, modVersion)]
     public class ShimyModBase : BaseUnityPlugin
     {
-        private const string modGUID = "Shimy.LCInfiniteSprintMod";
-        private const string modName = "Shimy Sprint Mod";
+        private const string modGUID = "Shimy.LCShimyMod";
+        private const string modName = "Shimy Mod";
         private const string modVersion = "1.0.0.0";
 
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -78,6 +82,31 @@ namespace Shimy.LethalCompanyMod
             Menu = (ModMenu)menuGameObject.GetComponent("ModMenu");
             ShimyModBase.mls.LogInfo("Mod menu Created.");
 
+            /*
+             * Load asset bundle for scrap items
+             */
+
+            string assetDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "itemmod");
+            AssetBundle bundle = AssetBundle.LoadFromFile(assetDir);
+
+            //Create item
+            Item watermelonItem = bundle.LoadAsset<Item>("Assets/LethalCompanyItems/Watermelon.asset");
+            
+            // Register item in game
+            NetworkPrefabs.RegisterNetworkPrefab(watermelonItem.spawnPrefab);
+            
+            // Fix for audio issue
+            Utilities.FixMixerGroups(watermelonItem.spawnPrefab);
+            
+            // Register item as a scrap
+            Items.RegisterScrap(watermelonItem,1000,Levels.LevelTypes.All);
+
+            TerminalNode node = ScriptableObject.CreateInstance<TerminalNode>();
+            node.clearPreviousText = true;
+            node.displayText = "This is a watermelon.";
+            Items.RegisterShopItem(watermelonItem, null, null, node, 0);
+
+            ShimyModBase.mls.LogInfo("Patched scrap items mod");
         }
 
         public void patchPlayerController()
